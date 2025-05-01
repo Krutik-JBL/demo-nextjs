@@ -34,7 +34,6 @@ const Contact = () => {
 
   const handleChange = (e) => {
     validateForm();
-    console.log("input val", e.target.value);
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -73,13 +72,6 @@ const Contact = () => {
   const addDocument = async (e) => {
     validateForm();
     e.preventDefault();
-    console.log(
-      "inside this fun",
-      formData.name,
-      formData.mobile_no,
-      formData.email_id,
-      formData.message
-    );
 
     try {
       if (isFormValid) {
@@ -89,7 +81,6 @@ const Contact = () => {
           email_id: formData.email_id,
           message: formData.message,
         });
-        console.log("Document written with ID: ", docRef.id);
         setFormData({
           name: "",
           mobile_no: "",
@@ -98,25 +89,23 @@ const Contact = () => {
         });
         setResponseMessage("Email sent successfully");
       } else {
-        console.log("not filled form");
         setResponseMessage("Please fill required fields.");
       }
     } catch (e) {
-      console.error("Error adding document: ", e);
       setResponseMessage("Something went wrong");
     }
   };
 
   const getDoc = async () => {
     const collectionRef = collection(db, "design_studio_data");
-    console.log("collection", collectionRef.id);
+   
     const querySnapshot = await getDocs(collectionRef);
-    console.log("query", querySnapshot.docs);
+    
     const data = querySnapshot.docs.map((doc) => ({
       ...doc.data(),
       id: doc.id,
     }));
-    console.log("dataa", data);
+   
     return data;
   };
 
